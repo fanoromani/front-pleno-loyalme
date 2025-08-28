@@ -67,7 +67,7 @@ Nossa equipe irá avaliar os seguintes pontos:
 1.  **Fork este repositório:** Crie um fork deste repositório para a sua conta pessoal do GitHub.
 2.  **Clone o seu fork:**
     ```bash
-    git clone [https://git.loyalme.tech/frontend/teste-front-pleno](https://git.loyalme.tech/frontend/teste-front-pleno)
+    git clone https://github.com/rodrigopulse/front-pleno-loyalme
     ```
 3.  **Desenvolva a solução:** Crie seu código para atender a todos os requisitos listados.
 
