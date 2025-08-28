@@ -1,21 +1,21 @@
 # Desafio Front-End: Galeria de Cupons Interativa
 
 <p align="center">
-  <img alt="React" src="https://img.shields.io/badge/tecnologia-React-blue?style=for-the-badge">
-  <img alt="Nível" src="https://img.shields.io/badge/nível-Pleno-orange?style=for-the-badge">
+  <img alt="Next" src="https://img.shields.io/badge/tecnologia-next-black?style=for-the-badge">
+  <img alt="Nível" src="https://img.shields.io/badge/nível-Pleno-blue?style=for-the-badge">
 </p>
 
 ## 👋 Bem vindo ao nosso Desafio!
 
 Olá, candidato(a)! Ficamos felizes com o seu interesse em fazer parte do nosso time.
 
-Este desafio foi projetado para avaliarmos suas habilidades em desenvolvimento front-end com React. Queremos ver como você estrutura um projeto, componentiza a interface e lida com o estado da aplicação.
+Este desafio foi projetado para avaliarmos suas habilidades em desenvolvimento front-end. Queremos ver como você estrutura um projeto, componentiza a interface e lida com o estado da aplicação.
 
 **Boa sorte!**
 
 ## 🎯 O Desafio
 
-O objetivo é construir uma aplicação de página única (SPA) que exibe uma lista de cupons de desconto. O usuário deve ser capaz de clicar em um cupom para ver mais detalhes em um modal.
+O objetivo é construir uma aplicação que exibe uma lista de cupons de desconto. O usuário deve ser capaz de clicar em um cupom para ver mais detalhes em um modal.
 
 ### Protótipo
 
@@ -39,15 +39,15 @@ O objetivo é construir uma aplicação de página única (SPA) que exibe uma li
     ```
     curl --location 'https://api.cuponeria.com.br/public/v4.1/loyalty/cuponeria/offer?slug={SLUG}'
     ```
-    - Use o endpoint abaixo para gerar o código
+    - Use o endpoint abaixo para gerar o código que aparece no copiar e ir para a loja do modal.
     ```
     public/v4.1/loyalty/cuponeria/offer/pick?slug={SLUG}
     ```
 
 ### Requisitos Técnicos
 
-- **Framework/Biblioteca:** O projeto **deve** ser desenvolvido utilizando **React** ou **Next**.
-- **Gerenciamento de Estado:** Você pode usar o estado local do React (`useState`, `useContext`) ou bibliotecas como Redux, Zustand, etc. A escolha é sua.
+- **Framework/Biblioteca:** O projeto **deve** ser desenvolvido utilizando **Next**.
+- **Gerenciamento de Estado:** Você pode usar o estado local (`useState`, `useContext`) ou bibliotecas como Redux, Zustand, etc. A escolha é sua.
 - **Estilização:** A escolha da abordagem de estilização é livre (CSS Modules, Styled-Components, Sass, Tailwind CSS, etc.). Dê preferência à que você tem mais familiaridade.
 - **Responsividade:** A aplicação deve ser mobile, não precisa da versão desktop.
 
