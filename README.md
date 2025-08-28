@@ -74,4 +74,7 @@ Para entregar seu desafio, siga os passos abaixo:
 1.  **Abra um Pull Request (PR):** Crie um Pull Request do seu fork para o repositório original. O título do PR deve ser `Desafio Front-End - [Seu Nome Completo]`.
 2.  **Envie o link do PR:** Responda ao e-mail de contato do processo seletivo com o link para o seu Pull Request.
 
-_(Opcional: Se desejar, faça o deploy da sua aplicação em serviços como Vercel, Netlify ou GitHub Pages e inclua o link da aplicação funcionando no corpo do seu Pull Request.)_
+**Diferenciais:**
+
+- Entregar o projeto já configurado com Docker, facilitando a execução e o deploy da aplicação.
+- Incluir testes automatizados para os componentes, demonstrando preocupação com a qualidade e a confiabilidade do código.
