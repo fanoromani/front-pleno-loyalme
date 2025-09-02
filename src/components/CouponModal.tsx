@@ -41,30 +41,30 @@ export default function CouponModal({ slug, onClose, code }: CouponModalProps) {
       onClick={onClose}
     >
       <div
-        className="flex flex-col items-center bg-white rounded-2xl shadow-lg max-w-96 w-full relative"
+        className="flex flex-col items-center bg-white rounded-2xl shadow-lg max-w-96 w-full absolute bottom-0"
         onClick={(e) => e.stopPropagation()}
       >
         {loading && <p className="text-center">Carregando...</p>}
 
         {!loading && coupon && (
-          <div className="flex flex-col gap-4 items-center">
-            <div className="flex justify-center p-6 gap-4">
+          <div className="flex flex-col gap-8 items-center">
+            <div className="flex justify-center px-6 pt-6 gap-2">
               <Image
                 src={coupon.store.logo}
                 alt={coupon.title}
-                width={124}
-                height={100}
-                className="rounded-full max-w-24 min-w-24"
+                width={80}
+                height={80}
+                className="rounded-full h-20 w-20"
               />
               <div className="flex flex-col gap-3">
                 <div className="flex gap-2 h-fit font-bold text-xs text-red-500 text-center">
                   {coupon.discount !== 0 && (
-                    <div className="p-2 border-1 rounded-full border-red-500">
+                    <div className="p-2 border rounded-full border-red-500">
                       <p>{coupon.discount.toString()}% OFF</p>
                     </div>
                   )}
                   {coupon.cashback && (
-                    <div className="p-2 border-1 rounded-full border-red-500">
+                    <div className="p-2 border rounded-full border-red-500">
                       <p>
                         {coupon.cashback.rate.current.toString()}% de cashback
                       </p>
@@ -73,25 +73,25 @@ export default function CouponModal({ slug, onClose, code }: CouponModalProps) {
                 </div>
                 {coupon.discount !== 0 &&
                   coupon.cashback?.rate.current !== 0 && (
-                    <p>
-                      Cupom EXCLUSIVO de {coupon.discount.toString()}% +{" "}
+                    <p className="text-[#2E3238]">
+                      Cupom EXCLUSIVO de {coupon.discount.toString()}% OFF{" "}
                       {coupon.cashback
-                        ? `${coupon.cashback.rate.current.toString()}%`
-                        : "0%"}{" "}
-                      de cashback em compras no site
+                        ? `+ ${coupon.cashback.rate.current.toString()}% de cashback`
+                        : ""}{" "}
+                      em compras no site
                     </p>
                   )}
               </div>
             </div>
-            <div className="flex items-center text-center border-2 border-red-500 rounded-full w-fit text-sm font-bold">
+            <div className="flex items-center text-center h-[50px] w-xs border-2 border-[#F72717] rounded-full text-sm font-bold">
               <p className="flex-grow">
                 {!code || code === "NOCODE" ? "Código não encontrado" : code}
               </p>
-              <button className="bg-red-500 text-white max-w-1/3 h-full rounded-r-full">
+              <button className="bg-red-500 text-white max-w-23 h-full rounded-r-full">
                 Copiar e ir para a loja
               </button>
             </div>
-            <div className="text-sm p-4 whitespace-pre-line bg-gray-300">
+            <div className="flex flex-col text-sm p-4 gap-3 bg-[#F6F6F6]">
               <h3 className="font-bold ">Regras de Uso</h3>
               <p>{coupon.rules}</p>
             </div>

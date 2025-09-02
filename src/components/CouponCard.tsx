@@ -7,39 +7,39 @@ interface CouponCardProps {
 
 export function CouponCard({ coupon }: CouponCardProps) {
   const footerText = `Cupom EXCLUSIVO ${
-    coupon.discount ? `de ${coupon.discount.toString()}%` : ""
+    coupon.discount ? `de ${coupon.discount.toString()}% OFF` : ""
   } ${
     coupon.cashback
-      ? `${coupon.cashback.rate.current.toString()}% de cashback`
+      ? `+ ${coupon.cashback.rate.current.toString()}% de cashback`
       : ""
   } em compras no site do ${coupon.store.name}`;
 
   return (
-    <div className="bg-white rounded-2xl p-5 gap-3 flex flex-col shadow-2xl max-w-xs">
-      <div className="flex gap-5 items-center">
+    <div className="bg-white rounded-2xl p-6 gap-4 flex flex-col shadow-2xl max-w-xs">
+      <div className="flex gap-2 items-center">
         <Image
           src={coupon.store.logo}
           alt={coupon.title}
-          width={100}
-          height={100}
+          width={80}
+          height={80}
           className="rounded-full"
         />
-        <div className="flex flex-col gap-2">
+        <div className="flex flex-col gap-1">
           {coupon.discount !== 0 && (
-            <h1 className="font-bold px-2 text-2xl border-2 rounded-full text-red-500 text-center border-red-500">
+            <h1 className="font-bold px-3 text-xs border rounded-full text-red-500 text-center border-red-500">
               {coupon.discount.toString()}% OFF
             </h1>
           )}
           {coupon.cashback && (
-            <p className="font-bold px-2 text-sm border-2 rounded-full text-red-500 text-center border-red-500">
+            <p className="font-bold px-3 text-xs border rounded-full text-red-500 text-center border-red-500">
               {coupon.cashback.rate.current.toString()}% de cashback
             </p>
           )}
         </div>
       </div>
-      <div className="h-1 w-full border-t-2 border-dashed border-gray-400" />
+      <div className="h-1 w-full border-t-2 border-dashed border-[#EFEFEF]" />
       <div>
-        <p>{footerText}</p>
+        <p className="text-[#2E3238]">{footerText}</p>
       </div>
     </div>
   );
