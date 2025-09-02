@@ -37,7 +37,11 @@ export function CouponCard({ coupon }: CouponCardProps) {
       onClick={() => openCouponModal(coupon.slug)}
       className="bg-white rounded-2xl p-6 gap-4 flex flex-col shadow-2xl max-w-xs cursor-pointer"
     >
-      <div className="flex gap-2 items-center">
+      <div
+        className={`flex gap-2 items-center ${
+          !hasDiscount && !hasCashback && "justify-center"
+        }`}
+      >
         <Image
           src={coupon.store.logo}
           alt={coupon.title}
