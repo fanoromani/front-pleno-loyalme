@@ -7,12 +7,25 @@ interface CouponCardProps {
 }
 
 export function CouponCard({ coupon, onClick }: CouponCardProps) {
+  const hasDiscount = coupon.discount !== 0;
+  const hasCashback = coupon.cashback;
+
+  const discountBadge = hasDiscount && (
+    <span className="font-bold px-3 text-xs border rounded-full text-red-500 text-center border-red-500">
+      {coupon.discount}% OFF
+    </span>
+  );
+
+  const cashbackBadge = hasCashback && (
+    <span className="font-bold px-3 text-xs border rounded-full text-red-500 text-center border-red-500">
+      {coupon.cashback!.rate.current}% de cashback
+    </span>
+  );
+
   const footerText = `Cupom EXCLUSIVO ${
-    coupon.discount ? `de ${coupon.discount.toString()}% OFF` : ""
+    hasDiscount ? `de ${coupon.discount}% OFF` : ""
   } ${
-    coupon.cashback
-      ? `+ ${coupon.cashback.rate.current.toString()}% de cashback`
-      : ""
+    hasCashback ? `+ ${coupon.cashback!.rate.current}% de cashback` : ""
   } em compras no site do ${coupon.store.name}`;
 
   return (
@@ -29,21 +42,13 @@ export function CouponCard({ coupon, onClick }: CouponCardProps) {
           className="rounded-full"
         />
         <div className="flex flex-col gap-1">
-          {coupon.discount !== 0 && (
-            <h1 className="font-bold px-3 text-xs border rounded-full text-red-500 text-center border-red-500">
-              {coupon.discount.toString()}% OFF
-            </h1>
-          )}
-          {coupon.cashback && (
-            <p className="font-bold px-3 text-xs border rounded-full text-red-500 text-center border-red-500">
-              {coupon.cashback.rate.current.toString()}% de cashback
-            </p>
-          )}
+          {discountBadge}
+          {cashbackBadge}
         </div>
       </div>
       <div className="h-1 w-full border-t-2 border-dashed border-[#EFEFEF]" />
       <div>
-        <p className="text-[#2E3238]">{footerText}</p>
+        <p>{footerText}</p>
       </div>
     </button>
   );

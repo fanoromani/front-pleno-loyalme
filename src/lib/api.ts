@@ -4,6 +4,7 @@ export interface Coupon {
   discount: number;
   slug: string;
   rules: string;
+  url: string;
   cashback?: {
     type: string;
     rate: {
