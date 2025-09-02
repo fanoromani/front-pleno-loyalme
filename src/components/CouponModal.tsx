@@ -3,7 +3,7 @@
 import { Coupon } from "@/lib/api";
 import { fetchCouponDetails } from "@/service/fetchCouponDetails";
 import Image from "next/image";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 
 interface CouponModalProps {
   slug: string | null;
@@ -35,42 +35,53 @@ export default function CouponModal({ slug, onClose, code }: CouponModalProps) {
 
   if (!slug) return null;
 
-  const hasDiscount = coupon?.discount && coupon.discount !== 0;
-  const hasCashback = coupon?.cashback && coupon.cashback.rate.current !== 0;
+  const hasDiscount = coupon?.discount !== 0;
+  const hasCashback =
+    coupon?.store.cashback && coupon.store.cashback.rate.current !== 0;
 
   const discountBadge = hasDiscount && (
     <div className="p-2 border rounded-full border-red-500 font-bold text-xs text-red-500">
-      {coupon!.discount}% OFF
+      {coupon?.discount}% OFF
     </div>
   );
 
   const cashbackBadge = hasCashback && (
     <div className="p-2 border rounded-full border-red-500 font-bold text-xs text-red-500">
-      {coupon!.cashback!.rate.current}% de cashback
+      {coupon.store.cashback.rate.current}% de cashback
     </div>
   );
 
-  const footerText =
-    hasDiscount || hasCashback
-      ? `Cupom EXCLUSIVO ${hasDiscount ? `de ${coupon!.discount}% OFF` : ""} ${
-          hasCashback ? `+ ${coupon!.cashback!.rate.current}% de cashback` : ""
-        } em compras no site`
-      : "";
+  const footerText = `Cupom EXCLUSIVO ${
+    hasDiscount ? `de ${coupon?.discount}% OFF` : ""
+  } ${
+    hasCashback ? `+ ${coupon.store.cashback.rate.current}% de cashback` : ""
+  } em compras no site`;
 
-  const displayCode =
-    !code || code === "NOCODE" ? "Código não encontrado" : code;
+  const displayCode = useMemo(() => {
+    return !code || code === "NOCODE" ? "" : code;
+  }, [code]);
 
-  const handleCopyAndRedirect = async () => {
-    if (!displayCode) return;
+  const displayButton = displayCode
+    ? "Copiar e ir para a loja"
+    : "Ir para a loja";
 
-    await navigator.clipboard.writeText(displayCode);
-
-    if (coupon?.url) {
-      window.open(coupon.url, "_blank");
-    } else {
-      window.open(coupon?.store.url, "_blank");
+  const copyCode = useCallback(async () => {
+    if (displayCode) {
+      await navigator.clipboard.writeText(displayCode);
     }
-  };
+  }, [displayCode]);
+
+  const redirectToStore = useCallback(() => {
+    const targetUrl = coupon?.url || coupon?.store.url;
+    if (targetUrl) {
+      window.open(targetUrl, "_blank");
+    }
+  }, [coupon]);
+
+  const handleClick = useCallback(async () => {
+    await copyCode();
+    redirectToStore();
+  }, [copyCode, redirectToStore]);
 
   return (
     <div
@@ -102,12 +113,13 @@ export default function CouponModal({ slug, onClose, code }: CouponModalProps) {
               </div>
             </div>
             <div className="flex items-center text-center h-[50px] w-xs border-2 border-red-500 rounded-full text-sm font-bold">
-              <p className="flex-grow">{displayCode}</p>
+              {displayCode && <p className="flex-grow">{displayCode}</p>}
               <button
-                className="bg-red-500 text-white max-w-23 h-full rounded-r-full cursor-pointer"
-                onClick={handleCopyAndRedirect}
+                onClick={handleClick}
+                className={`bg-red-500 text-white h-full cursor-pointer 
+          ${displayCode ? "max-w-23 rounded-r-full" : "w-full rounded-full"}`}
               >
-                Copiar e ir para a loja
+                {displayButton}
               </button>
             </div>
             <div className="flex flex-col text-sm p-4 gap-3 bg-[#F6F6F6]">

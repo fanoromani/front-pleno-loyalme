@@ -17,6 +17,13 @@ export interface Coupon {
     logo: string;
     name: string;
     url: string;
+    cashback: {
+      type: string;
+      rate: {
+        current: number;
+        previous: number;
+      };
+    };
   };
 }
 

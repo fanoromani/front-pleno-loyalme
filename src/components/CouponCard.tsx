@@ -8,7 +8,8 @@ interface CouponCardProps {
 
 export function CouponCard({ coupon, onClick }: CouponCardProps) {
   const hasDiscount = coupon.discount !== 0;
-  const hasCashback = coupon.cashback;
+  const hasCashback =
+    coupon.store.cashback && coupon.store.cashback.rate.current !== 0;
 
   const discountBadge = hasDiscount && (
     <span className="font-bold px-3 text-xs border rounded-full text-red-500 text-center border-red-500">
@@ -18,14 +19,14 @@ export function CouponCard({ coupon, onClick }: CouponCardProps) {
 
   const cashbackBadge = hasCashback && (
     <span className="font-bold px-3 text-xs border rounded-full text-red-500 text-center border-red-500">
-      {coupon.cashback!.rate.current}% de cashback
+      {coupon.store.cashback.rate.current}% de cashback
     </span>
   );
 
   const footerText = `Cupom EXCLUSIVO ${
     hasDiscount ? `de ${coupon.discount}% OFF` : ""
   } ${
-    hasCashback ? `+ ${coupon.cashback!.rate.current}% de cashback` : ""
+    hasCashback ? `+ ${coupon.store.cashback.rate.current}% de cashback` : ""
   } em compras no site do ${coupon.store.name}`;
 
   return (
