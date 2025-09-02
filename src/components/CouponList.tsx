@@ -13,22 +13,14 @@ export default function CouponList({ coupons }: { coupons: Coupon[] }) {
   const pickCoupon = async (slug: string) => {
     const response = await fetchCouponCode(slug);
     setCouponCode(response?.code);
+    setSelectedSlug(slug);
     return response;
   };
 
   return (
     <div className="flex flex-col gap-4 items-center">
       {coupons.map((coupon) => (
-        <button
-          key={coupon.id}
-          onClick={() => {
-            setSelectedSlug(coupon.slug);
-            pickCoupon(coupon.slug);
-          }}
-          className="cursor-pointer"
-        >
-          <CouponCard coupon={coupon} />
-        </button>
+        <CouponCard key={coupon.id} coupon={coupon} onClick={pickCoupon} />
       ))}
 
       {selectedSlug && (

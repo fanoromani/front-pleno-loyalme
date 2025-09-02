@@ -3,9 +3,10 @@ import Image from "next/image";
 
 interface CouponCardProps {
   coupon: Coupon;
+  onClick: (slug: string) => void;
 }
 
-export function CouponCard({ coupon }: CouponCardProps) {
+export function CouponCard({ coupon, onClick }: CouponCardProps) {
   const footerText = `Cupom EXCLUSIVO ${
     coupon.discount ? `de ${coupon.discount.toString()}% OFF` : ""
   } ${
@@ -15,7 +16,10 @@ export function CouponCard({ coupon }: CouponCardProps) {
   } em compras no site do ${coupon.store.name}`;
 
   return (
-    <div className="bg-white rounded-2xl p-6 gap-4 flex flex-col shadow-2xl max-w-xs">
+    <button
+      onClick={() => onClick(coupon.slug)}
+      className="bg-white rounded-2xl p-6 gap-4 flex flex-col shadow-2xl max-w-xs cursor-pointer"
+    >
       <div className="flex gap-2 items-center">
         <Image
           src={coupon.store.logo}
@@ -41,6 +45,6 @@ export function CouponCard({ coupon }: CouponCardProps) {
       <div>
         <p className="text-[#2E3238]">{footerText}</p>
       </div>
-    </div>
+    </button>
   );
 }

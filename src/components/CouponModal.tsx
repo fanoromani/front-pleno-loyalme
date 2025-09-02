@@ -83,7 +83,7 @@ export default function CouponModal({ slug, onClose, code }: CouponModalProps) {
                   )}
               </div>
             </div>
-            <div className="flex items-center text-center h-[50px] w-xs border-2 border-[#F72717] rounded-full text-sm font-bold">
+            <div className="flex items-center text-center h-[50px] w-xs border-2 border-red-500 rounded-full text-sm font-bold">
               <p className="flex-grow">
                 {!code || code === "NOCODE" ? "Código não encontrado" : code}
               </p>
