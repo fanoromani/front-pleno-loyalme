@@ -1,41 +1,37 @@
 "use client";
 
-import { Coupon } from "@/lib/api";
-import { fetchCouponDetails } from "@/service/fetchCouponDetails";
+import { useCouponModalStore } from "@/store/useCouponModalStore";
 import Image from "next/image";
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useCallback, useMemo } from "react";
 
-interface CouponModalProps {
-  slug: string | null;
-  code: string | null | undefined;
-  onClose: () => void;
-}
+export default function CouponModal() {
+  const { closeCouponModal, coupon, slug, code, loading } =
+    useCouponModalStore();
 
-export default function CouponModal({ slug, onClose, code }: CouponModalProps) {
-  const [coupon, setCoupon] = useState<Coupon | null>(null);
-  const [loading, setLoading] = useState(false);
+  const displayCode = useMemo(() => {
+    return !code || code === "NOCODE" ? "" : code;
+  }, [code]);
 
-  useEffect(() => {
-    if (!slug) return;
+  const copyCode = useCallback(async () => {
+    if (displayCode) {
+      await navigator.clipboard.writeText(displayCode);
+    }
+  }, [displayCode]);
 
-    const fetchDetails = async () => {
-      setLoading(true);
-      try {
-        const data = await fetchCouponDetails(slug);
-        setCoupon(data);
-      } catch (err) {
-        console.error("Erro ao buscar detalhes:", err);
-      } finally {
-        setLoading(false);
-      }
-    };
+  const redirectToStore = useCallback(() => {
+    const targetUrl = coupon?.url || coupon?.store.url;
+    if (targetUrl) {
+      window.open(targetUrl, "_blank");
+    }
+  }, [coupon]);
 
-    fetchDetails();
-  }, [slug]);
-
-  if (!slug) return null;
+  const handleClick = useCallback(async () => {
+    await copyCode();
+    redirectToStore();
+  }, [copyCode, redirectToStore]);
 
   const hasDiscount = coupon?.discount !== 0;
+
   const hasCashback =
     coupon?.store.cashback && coupon.store.cashback.rate.current !== 0;
 
@@ -57,36 +53,15 @@ export default function CouponModal({ slug, onClose, code }: CouponModalProps) {
     hasCashback ? `+ ${coupon.store.cashback.rate.current}% de cashback` : ""
   } em compras no site`;
 
-  const displayCode = useMemo(() => {
-    return !code || code === "NOCODE" ? "" : code;
-  }, [code]);
-
   const displayButton = displayCode
     ? "Copiar e ir para a loja"
     : "Ir para a loja";
 
-  const copyCode = useCallback(async () => {
-    if (displayCode) {
-      await navigator.clipboard.writeText(displayCode);
-    }
-  }, [displayCode]);
-
-  const redirectToStore = useCallback(() => {
-    const targetUrl = coupon?.url || coupon?.store.url;
-    if (targetUrl) {
-      window.open(targetUrl, "_blank");
-    }
-  }, [coupon]);
-
-  const handleClick = useCallback(async () => {
-    await copyCode();
-    redirectToStore();
-  }, [copyCode, redirectToStore]);
-
+  if (!slug) return null;
   return (
     <div
       className="fixed inset-0 flex items-center justify-center bg-black/50 z-50"
-      onClick={onClose}
+      onClick={closeCouponModal}
     >
       <div
         className="flex flex-col items-center bg-white rounded-2xl shadow-lg max-w-96 w-full absolute bottom-0"
@@ -131,7 +106,7 @@ export default function CouponModal({ slug, onClose, code }: CouponModalProps) {
 
         <button
           className="absolute top-3 right-3 text-gray-500 hover:text-gray-700"
-          onClick={onClose}
+          onClick={closeCouponModal}
           aria-label="Fechar modal"
         >
           ✕

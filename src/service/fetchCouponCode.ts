@@ -8,7 +8,7 @@ export async function fetchCouponCode(slug: string) {
       params: { slug },
     });
 
-    return response.data;
+    return response.data?.code;
   } catch (err: any) {
     throw new Error(err.message || "Failed to fetch coupon code");
   }

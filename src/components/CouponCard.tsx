@@ -1,12 +1,15 @@
+"use client";
+
 import { Coupon } from "@/lib/api";
+import { useCouponModalStore } from "@/store/useCouponModalStore";
 import Image from "next/image";
 
 interface CouponCardProps {
   coupon: Coupon;
-  onClick: (slug: string) => void;
 }
 
-export function CouponCard({ coupon, onClick }: CouponCardProps) {
+export function CouponCard({ coupon }: CouponCardProps) {
+  const { openCouponModal } = useCouponModalStore();
   const hasDiscount = coupon.discount !== 0;
   const hasCashback =
     coupon.store.cashback && coupon.store.cashback.rate.current !== 0;
@@ -31,7 +34,7 @@ export function CouponCard({ coupon, onClick }: CouponCardProps) {
 
   return (
     <button
-      onClick={() => onClick(coupon.slug)}
+      onClick={() => openCouponModal(coupon.slug)}
       className="bg-white rounded-2xl p-6 gap-4 flex flex-col shadow-2xl max-w-xs cursor-pointer"
     >
       <div className="flex gap-2 items-center">
