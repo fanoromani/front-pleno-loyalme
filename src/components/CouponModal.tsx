@@ -64,11 +64,13 @@ export default function CouponModal() {
       onClick={closeCouponModal}
     >
       <div
-        className="flex flex-col items-center bg-white rounded-2xl shadow-lg max-w-96 w-full absolute bottom-0 h-[426px]"
+        className={`flex flex-col items-center bg-white rounded-2xl shadow-lg max-w-96 w-full absolute bottom-0 h-[426px] transform transition-all duration-700 ease-in-out ${
+          coupon ? "translate-y-0 opacity-100" : "translate-y-full opacity-50"
+        }`}
         onClick={(e) => e.stopPropagation()}
       >
         {loading && (
-          <div className="h-10 w-10 rounded-full animate-spin border-t-2 border-r-2 border-accent mt-10" />
+          <div className="h-10 w-10 rounded-full animate-spin border-t-2 border-r-2 border-accent my-auto" />
         )}
 
         {!loading && coupon && (
