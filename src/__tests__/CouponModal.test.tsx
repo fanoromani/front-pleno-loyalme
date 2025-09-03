@@ -1,10 +1,9 @@
 import CouponModal from "@/components/CouponModal";
 import { useCouponModalStore } from "@/store/useCouponModalStore";
 import "@testing-library/jest-dom";
-import { fireEvent, render, screen } from "@testing-library/react";
+import { fireEvent, render } from "@testing-library/react";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 
-// Mock do Zustand store
 vi.mock("@/store/useCouponModalStore", () => ({
   useCouponModalStore: vi.fn(),
 }));
@@ -38,26 +37,25 @@ describe("<CouponModal />", () => {
   });
 
   it("renderiza corretamente quando há um cupom", () => {
-    render(<CouponModal />);
+    const { getByText } = render(<CouponModal />);
 
-    expect(screen.getByText("10% OFF")).toBeInTheDocument();
-    expect(screen.getByText("5% de cashback")).toBeInTheDocument();
+    expect(getByText("10% OFF")).toBeInTheDocument();
+    expect(getByText("5% de cashback")).toBeInTheDocument();
     expect(
-      screen.getByText(/Cupom EXCLUSIVO de 10% OFF \+ 5% de cashback/i)
+      getByText(/Cupom EXCLUSIVO de 10% OFF \+ 5% de cashback/i)
     ).toBeInTheDocument();
-    expect(screen.getByText("TESTCODE")).toBeInTheDocument();
+    expect(getByText("TESTCODE")).toBeInTheDocument();
     const linkButton = document.querySelector("Ir para a loja");
     expect(linkButton).not.toBeInTheDocument();
-    expect(screen.getByText("Copiar e ir para a loja")).toBeInTheDocument();
+    expect(getByText("Copiar e ir para a loja")).toBeInTheDocument();
   });
 
   it("chama closeCouponModal ao clicar no fundo ou botão de fechar", () => {
-    render(<CouponModal />);
+    const { getByLabelText } = render(<CouponModal />);
 
-    fireEvent.click(screen.getByLabelText("Fechar modal"));
+    fireEvent.click(getByLabelText("Fechar modal"));
     expect(mockClose).toHaveBeenCalled();
 
-    // resetar e testar clique no backdrop
     vi.clearAllMocks();
     const { container } = render(<CouponModal />);
     fireEvent.click(container.firstChild!);
@@ -74,6 +72,7 @@ describe("<CouponModal />", () => {
     });
 
     render(<CouponModal />);
+
     const spinner = document.querySelector(".animate-spin");
     expect(spinner).toBeInTheDocument();
   });
@@ -95,8 +94,8 @@ describe("<CouponModal />", () => {
     const writeText = vi.fn();
     vi.stubGlobal("navigator", { clipboard: { writeText } } as any);
 
-    render(<CouponModal />);
-    fireEvent.click(screen.getByText("Copiar e ir para a loja"));
+    const { getByText } = render(<CouponModal />);
+    fireEvent.click(getByText("Copiar e ir para a loja"));
 
     expect(writeText).toHaveBeenCalledWith("TESTCODE");
   });
