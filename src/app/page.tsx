@@ -6,8 +6,8 @@ export default async function Home() {
 
   if (!coupons?.length) {
     return (
-      <div className="flex min-h-screen flex-col items-center justify-center bg-amber-400">
-        <h1 className="text-3xl font-bold underline my-8">
+      <div className="flex min-h-screen flex-col items-center justify-center bg-background">
+        <h1 className="text-3xl font-bold underline my-8 text-center">
           Nenhum cupom disponível
         </h1>
       </div>
@@ -15,8 +15,7 @@ export default async function Home() {
   }
 
   return (
-    <div className="flex min-h-screen flex-col items-center justify-center bg-amber-400">
-      <h1 className="text-3xl font-bold underline my-8">Cupons</h1>
+    <div className="flex min-h-screen flex-col items-center justify-center">
       <div className="bg-background p-5">
         <CouponList coupons={coupons} />
       </div>
