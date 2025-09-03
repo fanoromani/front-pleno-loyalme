@@ -64,7 +64,7 @@ export default function CouponModal() {
       onClick={closeCouponModal}
     >
       <div
-        className={`flex flex-col items-center bg-white rounded-2xl shadow-lg max-w-96 w-full absolute bottom-0 h-[426px] transform transition-all duration-700 ease-in-out ${
+        className={`flex flex-col items-center bg-white rounded-t-3xl shadow-lg max-w-96 w-full absolute bottom-0 h-[426px] transform transition-all duration-700 ease-in-out ${
           coupon ? "translate-y-0 opacity-100" : "translate-y-full opacity-50"
         }`}
         onClick={(e) => e.stopPropagation()}
