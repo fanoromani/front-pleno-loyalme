@@ -3,7 +3,6 @@ import { Montserrat } from "next/font/google";
 import "./globals.css";
 
 const getMontserrat = Montserrat({
-  variable: "--font-montserrat",
   subsets: ["latin"],
 });
 
@@ -18,8 +17,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body className={`${getMontserrat.variable}`}>{children}</body>
+    <html lang="en" className={getMontserrat.className}>
+      <body>{children}</body>
     </html>
   );
 }

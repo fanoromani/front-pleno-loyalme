@@ -35,16 +35,16 @@ export default function CouponModal() {
   const hasCashback =
     coupon?.store.cashback && coupon.store.cashback.rate.current !== 0;
 
-  const discountBadge = hasDiscount && (
-    <div className="p-2 border rounded-full border-red-500 font-bold text-xs text-red-500">
+  const discountText = hasDiscount && (
+    <span className="p-2 border rounded-full border-accent font-bold text-xs text-accent">
       {coupon?.discount}% OFF
-    </div>
+    </span>
   );
 
-  const cashbackBadge = hasCashback && (
-    <div className="p-2 border rounded-full border-red-500 font-bold text-xs text-red-500">
+  const cashbackText = hasCashback && (
+    <span className="p-2 border rounded-full border-accent font-bold text-xs text-accent">
       {coupon.store.cashback.rate.current}% de cashback
-    </div>
+    </span>
   );
 
   const footerText = `Cupom EXCLUSIVO ${
@@ -64,14 +64,16 @@ export default function CouponModal() {
       onClick={closeCouponModal}
     >
       <div
-        className="flex flex-col items-center bg-white rounded-2xl shadow-lg max-w-96 w-full absolute bottom-0"
+        className="flex flex-col items-center bg-white rounded-2xl shadow-lg max-w-96 w-full absolute bottom-0 h-[426px]"
         onClick={(e) => e.stopPropagation()}
       >
-        {loading && <p className="text-center">Carregando...</p>}
+        {loading && (
+          <div className="h-10 w-10 rounded-full animate-spin border-t-2 border-r-2 border-accent mt-10" />
+        )}
 
         {!loading && coupon && (
           <div className="flex flex-col gap-8 items-center">
-            <div className="flex justify-center px-6 pt-6 gap-2">
+            <div className="flex justify-center px-4 pt-9 gap-2">
               <Image
                 src={coupon.store.logo}
                 alt={coupon.title}
@@ -80,24 +82,26 @@ export default function CouponModal() {
                 className="rounded-full h-20 w-20"
               />
               <div className="flex flex-col gap-3">
-                <div className="flex gap-2 h-fit font-bold text-xs text-red-500 text-center">
-                  {discountBadge}
-                  {cashbackBadge}
+                <div className="flex gap-2 h-fit font-bold text-xs text-accent text-center">
+                  {discountText}
+                  {cashbackText}
                 </div>
-                {footerText && <p className="text-[#2E3238]">{footerText}</p>}
+                {footerText && <h2 className="text-text">{footerText}</h2>}
               </div>
             </div>
-            <div className="flex items-center text-center h-[50px] w-xs border-2 border-red-500 rounded-full text-sm font-bold">
-              {displayCode && <p className="flex-grow">{displayCode}</p>}
+            <div className="flex items-center text-center h-[50px] w-xs border-2 border-accent rounded-full text-sm font-bold">
+              {displayCode && (
+                <p className="flex-grow text-text">{displayCode}</p>
+              )}
               <button
                 onClick={handleClick}
-                className={`bg-red-500 text-white h-full cursor-pointer 
+                className={`bg-accent text-white h-full cursor-pointer 
           ${displayCode ? "max-w-23 rounded-r-full" : "w-full rounded-full"}`}
               >
                 {displayButton}
               </button>
             </div>
-            <div className="flex flex-col text-sm p-4 gap-3 bg-[#F6F6F6]">
+            <div className="flex flex-col h-[170px] overflow-scroll text-sm px-4 pt-5 pb-16 gap-3 bg-footer text-text">
               <h3 className="font-bold ">Regras de Uso</h3>
               <p>{coupon.rules}</p>
             </div>
