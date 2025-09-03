@@ -30,7 +30,6 @@ export interface Coupon {
 interface ApiRequestParams {
   method: "GET";
   endpoint: string;
-  data?: any;
   params?: { [key: string]: string | number };
 }
 
